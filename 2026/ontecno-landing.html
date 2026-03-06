@@ -1,0 +1,1086 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>OnTecno — Servicio Técnico Especializado</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #0a0a0f;
+    --bg2: #111118;
+    --bg3: #16161f;
+    --accent: #00d4ff;
+    --accent2: #7c3aed;
+    --text: #f0f0f5;
+    --muted: #8888a0;
+    --border: rgba(255,255,255,0.07);
+    --card: rgba(255,255,255,0.04);
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 16px;
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  /* ── NOISE OVERLAY ── */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0.4;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.25rem 5vw;
+    background: rgba(10,10,15,0.8);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .logo {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 1.5rem;
+    letter-spacing: -0.02em;
+    color: var(--text);
+    text-decoration: none;
+  }
+
+  .logo span { color: var(--accent); }
+
+  .logo-img { display: flex; align-items: center; text-decoration: none; }
+
+  nav ul {
+    list-style: none;
+    display: flex;
+    gap: 2rem;
+  }
+
+  nav ul a {
+    color: var(--muted);
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: 500;
+    transition: color 0.2s;
+  }
+
+  nav ul a:hover { color: var(--text); }
+
+  .nav-cta {
+    background: var(--accent);
+    color: #000 !important;
+    padding: 0.5rem 1.25rem;
+    border-radius: 100px;
+    font-weight: 600 !important;
+    transition: opacity 0.2s !important;
+  }
+
+  .nav-cta:hover { opacity: 0.85; color: #000 !important; }
+
+  /* ── HERO ── */
+  .hero {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    padding: 0 5vw;
+    overflow: hidden;
+  }
+
+  .hero-glow {
+    position: absolute;
+    top: -200px; right: -200px;
+    width: 700px; height: 700px;
+    background: radial-gradient(circle, rgba(0,212,255,0.12) 0%, transparent 65%);
+    pointer-events: none;
+  }
+
+  .hero-glow2 {
+    position: absolute;
+    bottom: -300px; left: -150px;
+    width: 600px; height: 600px;
+    background: radial-gradient(circle, rgba(124,58,237,0.1) 0%, transparent 65%);
+    pointer-events: none;
+  }
+
+  .hero-content {
+    position: relative;
+    z-index: 1;
+    max-width: 700px;
+  }
+
+  .hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: rgba(0,212,255,0.1);
+    border: 1px solid rgba(0,212,255,0.25);
+    border-radius: 100px;
+    padding: 0.35rem 1rem;
+    font-size: 0.8rem;
+    color: var(--accent);
+    font-weight: 500;
+    margin-bottom: 2rem;
+    animation: fadeUp 0.6s ease both;
+  }
+
+  .hero-badge::before {
+    content: '';
+    width: 6px; height: 6px;
+    background: var(--accent);
+    border-radius: 50%;
+    animation: pulse 2s infinite;
+  }
+
+  h1 {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(2.8rem, 6vw, 5rem);
+    font-weight: 800;
+    line-height: 1.05;
+    letter-spacing: -0.03em;
+    margin-bottom: 1.5rem;
+    animation: fadeUp 0.6s 0.1s ease both;
+  }
+
+  h1 .highlight {
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .hero-desc {
+    font-size: 1.15rem;
+    color: var(--muted);
+    max-width: 520px;
+    margin-bottom: 2.5rem;
+    font-weight: 300;
+    animation: fadeUp 0.6s 0.2s ease both;
+  }
+
+  .hero-actions {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    animation: fadeUp 0.6s 0.3s ease both;
+  }
+
+  .btn-primary {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    background: var(--accent);
+    color: #000;
+    padding: 0.85rem 1.75rem;
+    border-radius: 100px;
+    font-weight: 600;
+    font-size: 0.95rem;
+    text-decoration: none;
+    transition: transform 0.2s, box-shadow 0.2s;
+    box-shadow: 0 0 30px rgba(0,212,255,0.3);
+  }
+
+  .btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 0 50px rgba(0,212,255,0.45);
+  }
+
+  .btn-secondary {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    background: var(--card);
+    color: var(--text);
+    padding: 0.85rem 1.75rem;
+    border-radius: 100px;
+    font-weight: 500;
+    font-size: 0.95rem;
+    text-decoration: none;
+    border: 1px solid var(--border);
+    transition: border-color 0.2s, background 0.2s;
+  }
+
+  .btn-secondary:hover {
+    border-color: rgba(255,255,255,0.2);
+    background: rgba(255,255,255,0.07);
+  }
+
+  .hero-stats {
+    display: flex;
+    gap: 2.5rem;
+    margin-top: 3.5rem;
+    padding-top: 2.5rem;
+    border-top: 1px solid var(--border);
+    animation: fadeUp 0.6s 0.4s ease both;
+    flex-wrap: wrap;
+  }
+
+  .stat-num {
+    font-family: 'Syne', sans-serif;
+    font-size: 2rem;
+    font-weight: 800;
+    color: var(--text);
+    line-height: 1;
+  }
+
+  .stat-num span { color: var(--accent); }
+  .stat-label { font-size: 0.8rem; color: var(--muted); margin-top: 0.3rem; }
+
+  /* ── FLOATING CARD ── */
+  .hero-visual {
+    position: absolute;
+    right: 5vw;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    animation: fadeLeft 0.8s 0.3s ease both;
+  }
+
+  .float-card {
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 1.25rem 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    min-width: 240px;
+    backdrop-filter: blur(10px);
+  }
+
+  .float-icon {
+    width: 44px; height: 44px;
+    border-radius: 12px;
+    display: grid;
+    place-items: center;
+    font-size: 1.25rem;
+    flex-shrink: 0;
+  }
+
+  .float-icon.cyan { background: rgba(0,212,255,0.15); }
+  .float-icon.purple { background: rgba(124,58,237,0.15); }
+  .float-icon.green { background: rgba(16,185,129,0.15); }
+
+  .float-title { font-size: 0.85rem; font-weight: 600; }
+  .float-sub { font-size: 0.75rem; color: var(--muted); }
+
+  /* ── SECTIONS ── */
+  section { position: relative; z-index: 1; }
+
+  .container {
+    max-width: 1140px;
+    margin: 0 auto;
+    padding: 0 5vw;
+  }
+
+  .section-label {
+    display: inline-block;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 1rem;
+  }
+
+  h2 {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    line-height: 1.15;
+    margin-bottom: 1rem;
+  }
+
+  .section-desc {
+    color: var(--muted);
+    max-width: 500px;
+    font-size: 1rem;
+    margin-bottom: 3rem;
+  }
+
+  /* ── SERVICES ── */
+  .services {
+    padding: 7rem 0;
+    background: var(--bg2);
+  }
+
+  .services-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(310px, 1fr));
+    gap: 1.25rem;
+  }
+
+  .service-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 2rem;
+    transition: border-color 0.3s, transform 0.3s, background 0.3s;
+    cursor: default;
+  }
+
+  .service-card:hover {
+    border-color: rgba(0,212,255,0.3);
+    background: rgba(0,212,255,0.04);
+    transform: translateY(-4px);
+  }
+
+  .svc-icon {
+    font-size: 2rem;
+    margin-bottom: 1.25rem;
+    display: block;
+  }
+
+  .svc-title {
+    font-family: 'Syne', sans-serif;
+    font-size: 1.15rem;
+    font-weight: 700;
+    margin-bottom: 0.6rem;
+  }
+
+  .svc-desc {
+    font-size: 0.88rem;
+    color: var(--muted);
+    line-height: 1.65;
+  }
+
+  .svc-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: 1.25rem;
+  }
+
+  .tag {
+    font-size: 0.72rem;
+    color: var(--muted);
+    border: 1px solid var(--border);
+    border-radius: 100px;
+    padding: 0.2rem 0.65rem;
+  }
+
+  /* ── WHY US ── */
+  .why {
+    padding: 7rem 0;
+  }
+
+  .why-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: center;
+  }
+
+  .why-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    margin-top: 2rem;
+  }
+
+  .why-item {
+    display: flex;
+    gap: 1rem;
+    align-items: flex-start;
+  }
+
+  .why-dot {
+    width: 36px; height: 36px;
+    background: rgba(0,212,255,0.1);
+    border: 1px solid rgba(0,212,255,0.2);
+    border-radius: 10px;
+    display: grid;
+    place-items: center;
+    font-size: 1rem;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+
+  .why-title { font-weight: 600; font-size: 0.95rem; margin-bottom: 0.2rem; }
+  .why-sub { font-size: 0.83rem; color: var(--muted); }
+
+  .why-visual {
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    border-radius: 24px;
+    padding: 2.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .progress-item { }
+  .progress-label {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.82rem;
+    margin-bottom: 0.5rem;
+    color: var(--muted);
+  }
+
+  .progress-bar {
+    height: 6px;
+    background: var(--border);
+    border-radius: 100px;
+    overflow: hidden;
+  }
+
+  .progress-fill {
+    height: 100%;
+    border-radius: 100px;
+    background: linear-gradient(90deg, var(--accent), var(--accent2));
+    animation: fillBar 1.5s ease forwards;
+    width: 0;
+  }
+
+  /* ── LOCATIONS ── */
+  .locations {
+    padding: 7rem 0;
+    background: var(--bg2);
+  }
+
+  .loc-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+    margin-top: 1rem;
+  }
+
+  .loc-thumb {
+    width: 100%;
+    border-radius: 12px;
+    overflow: hidden;
+    margin-bottom: 1.25rem;
+    border: 1px solid var(--border);
+    background: var(--bg3);
+  }
+
+  .loc-thumb svg {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+
+  .loc-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 2rem;
+    transition: border-color 0.3s;
+  }
+
+  .loc-card:hover { border-color: rgba(0,212,255,0.25); }
+
+  .loc-chip {
+    display: inline-block;
+    background: rgba(0,212,255,0.1);
+    color: var(--accent);
+    border-radius: 100px;
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    padding: 0.25rem 0.75rem;
+    margin-bottom: 1.25rem;
+    text-transform: uppercase;
+  }
+
+  .loc-name {
+    font-family: 'Syne', sans-serif;
+    font-size: 1.3rem;
+    font-weight: 700;
+    margin-bottom: 0.25rem;
+  }
+
+  .loc-address {
+    font-size: 0.85rem;
+    color: var(--muted);
+    margin-bottom: 1.25rem;
+  }
+
+  .loc-detail {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.83rem;
+    color: var(--muted);
+    margin-bottom: 0.5rem;
+  }
+
+  .loc-detail span:first-child { color: var(--accent); }
+
+  .loc-wsp {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: rgba(37,211,102,0.12);
+    color: #25d366;
+    border: 1px solid rgba(37,211,102,0.2);
+    border-radius: 100px;
+    padding: 0.5rem 1.1rem;
+    font-size: 0.83rem;
+    font-weight: 600;
+    text-decoration: none;
+    margin-top: 1.25rem;
+    transition: background 0.2s;
+  }
+
+  .loc-wsp:hover { background: rgba(37,211,102,0.2); }
+
+  /* ── PROCESS ── */
+  .process {
+    padding: 7rem 0;
+  }
+
+  .steps {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.5rem;
+    margin-top: 1rem;
+    position: relative;
+  }
+
+  .steps::before {
+    content: '';
+    position: absolute;
+    top: 28px;
+    left: calc(12.5% + 28px);
+    right: calc(12.5% + 28px);
+    height: 1px;
+    background: var(--border);
+  }
+
+  .step-num {
+    width: 56px; height: 56px;
+    border-radius: 50%;
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    display: grid;
+    place-items: center;
+    font-family: 'Syne', sans-serif;
+    font-size: 1rem;
+    font-weight: 800;
+    color: var(--accent);
+    margin-bottom: 1.25rem;
+    position: relative;
+    z-index: 1;
+  }
+
+  .step-title {
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 1rem;
+    margin-bottom: 0.4rem;
+  }
+
+  .step-desc { font-size: 0.82rem; color: var(--muted); }
+
+  /* ── CTA BAND ── */
+  .cta-band {
+    padding: 6rem 0;
+    background: linear-gradient(135deg, rgba(0,212,255,0.07), rgba(124,58,237,0.07));
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    text-align: center;
+  }
+
+  .cta-band h2 { margin-bottom: 1rem; }
+  .cta-band p { color: var(--muted); margin-bottom: 2rem; }
+
+  .cta-buttons {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    padding: 3rem 5vw;
+    border-top: 1px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
+  footer p { font-size: 0.8rem; color: var(--muted); }
+
+  .footer-links {
+    display: flex;
+    gap: 1.5rem;
+    list-style: none;
+  }
+
+  .footer-links a {
+    font-size: 0.8rem;
+    color: var(--muted);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .footer-links a:hover { color: var(--text); }
+
+  /* ── ANIMATIONS ── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes fadeLeft {
+    from { opacity: 0; transform: translateX(30px) translateY(-50%); }
+    to   { opacity: 1; transform: translateX(0) translateY(-50%); }
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.4; }
+  }
+
+  @keyframes fillBar {
+    to { width: var(--w); }
+  }
+
+  /* ── MOBILE ── */
+  @media (max-width: 900px) {
+    .hero-visual { display: none; }
+    .why-grid { grid-template-columns: 1fr; }
+    .loc-grid { grid-template-columns: 1fr; }
+    .steps { grid-template-columns: 1fr 1fr; }
+    .steps::before { display: none; }
+    nav ul { display: none; }
+  }
+
+  @media (max-width: 520px) {
+    .steps { grid-template-columns: 1fr; }
+    .hero-stats { gap: 1.5rem; }
+  }
+
+  /* ── REVEAL ── */
+  .reveal {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+
+  .reveal.visible {
+    opacity: 1;
+    transform: none;
+  }
+
+  .hamburger {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    cursor: pointer;
+    padding: 5px;
+  }
+
+  .hamburger span {
+    display: block;
+    width: 22px;
+    height: 2px;
+    background: var(--muted);
+    border-radius: 2px;
+  }
+
+  @media (max-width: 900px) {
+    .hamburger { display: flex; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="logo-img"><img src="https://www.ontecno.com.ar/images/version-1_positivo_color-duotono4x.png" alt="OnTecno" style="height:44px;width:auto;"></a>
+  <ul>
+    <li><a href="#servicios">Servicios</a></li>
+    <li><a href="#nosotros">Nosotros</a></li>
+    <li><a href="#proceso">¿Cómo funciona?</a></li>
+    <li><a href="#sucursales">Sucursales</a></li>
+    <li><a href="https://wa.me/5491131416256?text=Hola!%20Quiero%20consultar%20sobre%20una%20reparaci%C3%B3n" target="_blank" class="nav-cta">Consultar ahora</a></li>
+  </ul>
+  <div class="hamburger" onclick="this.parentElement.querySelector('ul').style.display='flex'">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-glow"></div>
+  <div class="hero-glow2"></div>
+
+  <div class="hero-content">
+    <div class="hero-badge">+15 años de experiencia · 2 sucursales</div>
+
+    <h1>Tu equipo<br>en manos<br><span class="highlight">expertas.</span></h1>
+
+    <p class="hero-desc">Reparación profesional de notebooks, PCs y componentes. Diagnóstico rápido, presupuesto claro y entrega garantizada en Belgrano y Pilar.</p>
+
+    <div class="hero-actions">
+      <a href="https://wa.me/5491131416256?text=Hola!%20Quiero%20consultar%20sobre%20una%20reparaci%C3%B3n" target="_blank" class="btn-primary">
+        <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        Consultar por WhatsApp
+      </a>
+      <a href="#servicios" class="btn-secondary">
+        Ver servicios
+        <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </a>
+    </div>
+
+    <div class="hero-stats">
+      <div>
+        <div class="stat-num">15<span>+</span></div>
+        <div class="stat-label">Años en el rubro</div>
+      </div>
+      <div>
+        <div class="stat-num">2</div>
+        <div class="stat-label">Sucursales</div>
+      </div>
+      <div>
+        <div class="stat-num">4.5<span>★</span></div>
+        <div class="stat-label">Calificación promedio</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="hero-visual">
+    <div class="float-card">
+      <div class="float-icon cyan">🔧</div>
+      <div>
+        <div class="float-title">Reparación Hardware</div>
+        <div class="float-sub">Motherboard · Placas · Pantallas</div>
+      </div>
+    </div>
+    <div class="float-card">
+      <div class="float-icon purple">💾</div>
+      <div>
+        <div class="float-title">Soluciones Software</div>
+        <div class="float-sub">Windows · Drivers · Programas</div>
+      </div>
+    </div>
+    <div class="float-card">
+      <div class="float-icon green">✅</div>
+      <div>
+        <div class="float-title">Diagnóstico incluido</div>
+        <div class="float-sub">Sin costo si no reparás</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section class="services" id="servicios">
+  <div class="container">
+    <span class="section-label reveal">Lo que hacemos</span>
+    <h2 class="reveal">Servicios especializados<br>para cada problema</h2>
+    <p class="section-desc reveal">Desde el componente más pequeño hasta una instalación completa. Hardware o software, lo resolvemos.</p>
+
+    <div class="services-grid">
+      <div class="service-card reveal">
+        <span class="svc-icon">🖥️</span>
+        <div class="svc-title">Reparación de Notebooks</div>
+        <p class="svc-desc">Diagnóstico y reparación de notebooks de todas las marcas. Pantallas, teclados, bisagras, cargadores y mucho más.</p>
+        <div class="svc-tags">
+          <span class="tag">HP</span><span class="tag">Lenovo</span><span class="tag">Dell</span><span class="tag">Asus</span><span class="tag">Acer</span>
+        </div>
+      </div>
+
+      <div class="service-card reveal">
+        <span class="svc-icon">🔩</span>
+        <div class="svc-title">Motherboard & Componentes</div>
+        <p class="svc-desc">Reparación avanzada de placas madre, placas de video, chips y soldadura de componentes a nivel de circuito.</p>
+        <div class="svc-tags">
+          <span class="tag">Motherboard</span><span class="tag">GPU</span><span class="tag">RAM</span><span class="tag">Soldadura</span>
+        </div>
+      </div>
+
+      <div class="service-card reveal">
+        <span class="svc-icon">🖱️</span>
+        <div class="svc-title">PCs de Escritorio & AIO</div>
+        <p class="svc-desc">Mantenimiento, upgrades y reparación de computadoras de escritorio y All-in-One. Actualizamos tu equipo al siguiente nivel.</p>
+        <div class="svc-tags">
+          <span class="tag">PC Gaming</span><span class="tag">AIO</span><span class="tag">Armado</span>
+        </div>
+      </div>
+
+      <div class="service-card reveal">
+        <span class="svc-icon">🖥</span>
+        <div class="svc-title">Monitores LCD / LED</div>
+        <p class="svc-desc">Reparación de monitores con problemas de imagen, retroiluminación, puertos dañados o sin encendido.</p>
+        <div class="svc-tags">
+          <span class="tag">LCD</span><span class="tag">LED</span><span class="tag">IPS</span>
+        </div>
+      </div>
+
+      <div class="service-card reveal">
+        <span class="svc-icon">🪟</span>
+        <div class="svc-title">Windows & Sistemas Operativos</div>
+        <p class="svc-desc">Instalación limpia de Windows 10/11, activación, drivers y actualizaciones. Tu equipo como nuevo desde cero.</p>
+        <div class="svc-tags">
+          <span class="tag">Windows 10</span><span class="tag">Windows 11</span><span class="tag">Drivers</span><span class="tag">Activación</span>
+        </div>
+      </div>
+
+      <div class="service-card reveal">
+        <span class="svc-icon">📦</span>
+        <div class="svc-title">Instalación de Programas</div>
+        <p class="svc-desc">Configuramos todo el software que necesitás: Office, Photoshop, antivirus, navegadores y programas específicos de tu rubro.</p>
+        <div class="svc-tags">
+          <span class="tag">Office</span><span class="tag">Adobe</span><span class="tag">Antivirus</span><span class="tag">Apps</span>
+        </div>
+      </div>
+
+      <div class="service-card reveal">
+        <span class="svc-icon">🧹</span>
+        <div class="svc-title">Mantenimiento Preventivo</div>
+        <p class="svc-desc">Limpieza interna, cambio de pasta térmica y revisión completa del sistema para máximo rendimiento y duración.</p>
+        <div class="svc-tags">
+          <span class="tag">Limpieza</span><span class="tag">Pasta térmica</span><span class="tag">Optimización</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WHY US -->
+<section class="why" id="nosotros">
+  <div class="container">
+    <div class="why-grid">
+      <div>
+        <span class="section-label reveal">¿Por qué OnTecno?</span>
+        <h2 class="reveal">Experiencia real,<br>soluciones concretas</h2>
+        <p class="section-desc reveal">No cambiamos lo que se puede reparar. Somos directos con los presupuestos y priorizamos siempre tu equipo.</p>
+
+        <div class="why-list">
+          <div class="why-item reveal">
+            <div class="why-dot">🏆</div>
+            <div>
+              <div class="why-title">+15 años en el rubro</div>
+              <div class="why-sub">Experiencia acumulada en hardware y software de todas las marcas.</div>
+            </div>
+          </div>
+          <div class="why-item reveal">
+            <div class="why-dot">⚡</div>
+            <div>
+              <div class="why-title">Diagnóstico rápido</div>
+              <div class="why-sub">Evaluamos tu equipo y te damos un presupuesto claro antes de comenzar.</div>
+            </div>
+          </div>
+          <div class="why-item reveal">
+            <div class="why-dot">🔒</div>
+            <div>
+              <div class="why-title">Trabajo garantizado</div>
+              <div class="why-sub">Todas nuestras reparaciones tienen garantía. Si no lo arreglamos, no cobramos diagnóstico.</div>
+            </div>
+          </div>
+          <div class="why-item reveal">
+            <div class="why-dot">💬</div>
+            <div>
+              <div class="why-title">Atención personalizada</div>
+              <div class="why-sub">Hablás directamente con el técnico. Sin intermediarios, sin vueltas.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="why-visual reveal">
+        <p style="font-family:'Syne',sans-serif;font-size:0.85rem;font-weight:700;margin-bottom:0.5rem;">Nivel de especialización por área</p>
+        <p style="font-size:0.78rem;color:var(--muted);margin-bottom:1.5rem;">Basado en años de experiencia acumulada</p>
+
+        <div class="progress-item">
+          <div class="progress-label"><span>Reparación de Notebooks</span><span>96%</span></div>
+          <div class="progress-bar"><div class="progress-fill" style="--w:96%"></div></div>
+        </div>
+        <div class="progress-item" style="margin-top:1rem;">
+          <div class="progress-label"><span>Motherboard & Soldadura</span><span>92%</span></div>
+          <div class="progress-bar"><div class="progress-fill" style="--w:92%"></div></div>
+        </div>
+        <div class="progress-item" style="margin-top:1rem;">
+          <div class="progress-label"><span>Monitores LCD/LED</span><span>89%</span></div>
+          <div class="progress-bar"><div class="progress-fill" style="--w:89%"></div></div>
+        </div>
+        <div class="progress-item" style="margin-top:1rem;">
+          <div class="progress-label"><span>Software & Sistemas</span><span>95%</span></div>
+          <div class="progress-bar"><div class="progress-fill" style="--w:95%"></div></div>
+        </div>
+        <div class="progress-item" style="margin-top:1rem;">
+          <div class="progress-label"><span>PCs y Armado a medida</span><span>90%</span></div>
+          <div class="progress-bar"><div class="progress-fill" style="--w:90%"></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROCESS -->
+<section class="process" id="proceso" style="background:var(--bg2);">
+  <div class="container">
+    <span class="section-label reveal">¿Cómo funciona?</span>
+    <h2 class="reveal">Simple y directo,<br>en 3 pasos</h2>
+    <p class="section-desc reveal">Dejás el equipo, nosotros nos encargamos. Sin pasos innecesarios, sin vueltas.</p>
+
+    <div class="steps" style="grid-template-columns: repeat(3,1fr);">
+      <div class="reveal">
+        <div class="step-num">01</div>
+        <div class="step-title">Contacto o visita</div>
+        <p class="step-desc">Escribinos por WhatsApp o pasate por cualquiera de nuestras sucursales. Te atendemos de lunes a sábado.</p>
+      </div>
+      <div class="reveal">
+        <div class="step-num">02</div>
+        <div class="step-title">Reparación</div>
+        <p class="step-desc">Dejás el equipo y nuestros técnicos trabajan de manera inmediata. Diagnóstico y solución sin demoras.</p>
+      </div>
+      <div class="reveal">
+        <div class="step-num">03</div>
+        <div class="step-title">Entrega</div>
+        <p class="step-desc">Retirás tu equipo funcionando al 100%, con garantía de trabajo y asesoramiento personalizado incluido.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- LOCATIONS -->
+<section class="locations" id="sucursales">
+  <div class="container">
+    <span class="section-label reveal">Nuestras sucursales</span>
+    <h2 class="reveal">Dos locales,<br>una sola calidad</h2>
+    <p class="section-desc reveal">Encontranos en Belgrano y Pilar. También podés escribirnos por WhatsApp antes de venir.</p>
+
+    <div class="loc-grid">
+      <div class="loc-card reveal">
+        <div class="loc-thumb">
+          <img src="https://www.ontecno.com.ar/images/2025/mostradorBelgrano1.jpeg" 
+               alt="Sucursal Belgrano" 
+               style="width:100%;height:180px;object-fit:cover;display:block;border-radius:12px;"
+               onerror="this.style.display='none'">
+        </div>
+        <div class="loc-chip">Belgrano · CABA</div>
+        <div class="loc-name">Sucursal Belgrano</div>
+        <div class="loc-address">📍 Echeverría 2650, Belgrano</div>
+        <div class="loc-detail"><span>🕒</span><span>Lunes a sábados · 10 a 20 hs</span></div>
+        <div class="loc-detail"><span>📞</span><span>+54 9 11 3141-6256</span></div>
+        <a href="https://wa.me/5491131416256?text=Hola!%20Consulta%20sucursal%20Belgrano" target="_blank" class="loc-wsp">
+          <svg width="14" height="14" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+          WhatsApp Belgrano
+        </a>
+      </div>
+
+      <div class="loc-card reveal">
+        <div class="loc-thumb">
+          <img src="https://www.ontecno.com.ar/images/2025/pilarEntrada2.jpeg" 
+               alt="Sucursal Pilar" 
+               style="width:100%;height:180px;object-fit:cover;display:block;border-radius:12px;"
+               onerror="this.style.display='none'">
+        </div>
+        <div class="loc-chip">Pilar · GBA</div>
+        <div class="loc-name">Sucursal Pilar</div>
+        <div class="loc-address">📍 Pueblo Caamaño, Pilar</div>
+        <div class="loc-detail"><span>🕒</span><span>Lunes a sábados · 10 a 20 hs</span></div>
+        <div class="loc-detail"><span>📞</span><span>+54 9 11 2294-6207</span></div>
+        <a href="https://wa.me/5491122946207?text=Hola!%20Consulta%20sucursal%20Pilar" target="_blank" class="loc-wsp">
+          <svg width="14" height="14" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+          WhatsApp Pilar
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA BAND -->
+<section class="cta-band">
+  <div class="container">
+    <span class="section-label">¿Tenés un equipo con problemas?</span>
+    <h2>No esperés más.<br>Escribinos ahora.</h2>
+    <p>Diagnóstico el mismo día y entrega garantizada.<br>Más de 15 años resolviendo problemas reales.</p>
+    <div class="cta-buttons">
+      <a href="https://wa.me/5491131416256?text=Hola!%20Quiero%20consultar%20sobre%20una%20reparaci%C3%B3n" target="_blank" class="btn-primary">
+        <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        Consultar por WhatsApp
+      </a>
+      <a href="#sucursales" class="btn-secondary">Ver sucursales</a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <a href="#" class="logo-img" style="display:flex;align-items:center;"><img src="https://www.ontecno.com.ar/images/version-1_positivo_color-duotono4x.png" alt="OnTecno" style="height:44px;width:auto;"></a>
+  <p>© 2026 OnTecno · Soluciones informáticas · CABA & Pilar</p>
+  <ul class="footer-links">
+    <li><a href="#servicios">Servicios</a></li>
+    <li><a href="#sucursales">Sucursales</a></li>
+    <li><a href="https://wa.me/5491131416256" target="_blank">WhatsApp</a></li>
+  </ul>
+</footer>
+
+<script>
+  // Reveal on scroll
+  const revealEls = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((e, i) => {
+      if (e.isIntersecting) {
+        setTimeout(() => e.target.classList.add('visible'), i * 80);
+        observer.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.12 });
+
+  revealEls.forEach(el => observer.observe(el));
+
+  // Progress bars trigger on scroll
+  const progressObserver = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.querySelectorAll('.progress-fill').forEach(bar => {
+          bar.style.animationPlayState = 'running';
+        });
+      }
+    });
+  }, { threshold: 0.3 });
+
+  document.querySelectorAll('.why-visual').forEach(el => progressObserver.observe(el));
+
+  // Pause progress animations initially
+  document.querySelectorAll('.progress-fill').forEach(bar => {
+    bar.style.animationPlayState = 'paused';
+  });
+
+  // Smooth active nav on scroll
+  const sections = document.querySelectorAll('section[id]');
+  window.addEventListener('scroll', () => {
+    let current = '';
+    sections.forEach(s => {
+      if (window.scrollY >= s.offsetTop - 120) current = s.id;
+    });
+    document.querySelectorAll('nav ul a').forEach(a => {
+      a.style.color = a.getAttribute('href') === '#' + current ? 'var(--text)' : '';
+    });
+  });
+</script>
+</body>
+</html>
